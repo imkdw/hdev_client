@@ -1,11 +1,11 @@
-import { ChangeEvent, useState, useCallback, FormEvent, useEffect } from "react";
+import { ChangeEvent, useState, FormEvent, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { loggedInUserState } from "../../../recoil";
 import { updateBoardDataState } from "../../../recoil/board";
 import { getBoard, updateBoard } from "../../../services/BoardService";
-import { categoryValidation, contentValidation, tagsValidation, titleValidation } from "../../../utils/Board";
+import { categoryValidation, tagsValidation, titleValidation } from "../../../utils/Board";
 import TextEditor from "./TextEditor";
 
 const StyledUpdateBoardForm = styled.form`

@@ -58,7 +58,7 @@ const TextEditor = ({ boardId }: TextEditorProps) => {
         return { ...prevState, content: markdown };
       });
     });
-  }, [addImageBlobHook, setUpdateBoardData]);
+  }, [addImageBlobHook, updateBoardData.content]);
 
   return <div ref={editorRef}></div>;
 };
