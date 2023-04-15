@@ -27,11 +27,16 @@ jobs:
           npm run build
 
       - name: 빌드한 파일 S3에 업로드
-        run: |
-          aws s3 sync ./build ${{ secrets.AWS_S3_BUCKET_URL }} --profile=${{ secrets.AWS_IAM_USERNAME }}
+        uses: jakejarvis/s3-sync-action@master
+        with:
+          args: --acl public-read --follow-symlinks --delete
+          bucket-url: ${{ secrets.AWS_S3_BUCKET_URL }}
+          source-dir: ./build
 
       - name: CloudFront 캐시 무력화 처리
-        uses: dawidd6/action-invalidate-cloudfront-cache@v2
+        uses: aws-cloudfront-invalidate-action@1.0.0
         with:
-          cloudfront-distribution-id: ${{ secrets.AWS_CLOUDFRONT_ID }}
+          distribution-id: ${{ secrets.AWS_CLOUDFRONT_ID }}
           paths: "/*"
+          access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
