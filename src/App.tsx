@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import GlobalStyles from "./GlobalStyles";
 import AuthPage from "./pages/Auth/AuthPage";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { Loading } from "./components/Common";
 import { isLoadingState, loggedInUserState } from "./recoil";
 import MainPage from "./pages/Main/MainPage";
@@ -18,7 +18,7 @@ import { checkLoggedIn } from "./services/AuthService";
 
 function App() {
   const isLoading = useRecoilValue(isLoadingState);
-  const [loggedInUser, setLoggedInUser] = useRecoilState(loggedInUserState);
+  const setLoggedInUser = useSetRecoilState(loggedInUserState);
 
   useEffect(() => {
     const checkLoggedInUser = async () => {
@@ -48,7 +48,7 @@ function App() {
     };
 
     checkLoggedInUser();
-  }, []);
+  }, [setLoggedInUser]);
 
   return (
     <>

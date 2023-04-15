@@ -1,4 +1,4 @@
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { RecommendIcon } from "../../../assets/icon";

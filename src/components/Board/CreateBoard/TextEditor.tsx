@@ -34,7 +34,7 @@ const TextEditor = ({ onChange, tempBoardId }: TextEditorProps) => {
         callback(`이미지 업로드 실패, ${err.message}`);
       }
     },
-    [loggedInUser.accessToken, tempBoardId]
+    [loggedInUser.accessToken, setLoggedInUser, tempBoardId]
   );
 
   useEffect(() => {

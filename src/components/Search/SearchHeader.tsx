@@ -1,5 +1,3 @@
-import { useMediaQuery } from "react-responsive";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const StyledSearchHeader = styled.div`

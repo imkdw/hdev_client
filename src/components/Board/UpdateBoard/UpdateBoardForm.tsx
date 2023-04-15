@@ -1,6 +1,6 @@
 import { ChangeEvent, useState, useCallback, FormEvent, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { loggedInUserState } from "../../../recoil";
 import { updateBoardDataState } from "../../../recoil/board";
@@ -124,10 +124,21 @@ const InputWrapper = styled.div`
     flex-direction: column;
   }
 `;
+interface IsBoardDataValid {
+  [key: string]: null | boolean;
+}
 
 const UpdateBoardForm = () => {
   const [updateBoardData, setUpdateBoardData] = useRecoilState(updateBoardDataState);
   const boardId = useParams().boardId as string;
+
+  const [isBoardDataValid, setIsBoardDataValid] = useState<IsBoardDataValid>({
+    category: null,
+    title: null,
+    content: null,
+  });
+  const [loggedInUser, setLoggedInUser] = useRecoilState(loggedInUserState);
+  const navigator = useNavigate();
 
   useEffect(() => {
     const loadBoard = async () => {
@@ -148,20 +159,7 @@ const UpdateBoardForm = () => {
     };
 
     loadBoard();
-  }, [boardId]);
-
-  interface IsBoardDataValid {
-    [key: string]: null | boolean;
-  }
-
-  const [isBoardDataValid, setIsBoardDataValid] = useState<IsBoardDataValid>({
-    category: null,
-    title: null,
-    content: null,
-  });
-
-  const [loggedInUser, setLoggedInUser] = useRecoilState(loggedInUserState);
-  const navigator = useNavigate();
+  }, [boardId, setUpdateBoardData, setIsBoardDataValid]);
 
   const changeCategory = (event: ChangeEvent<HTMLSelectElement>) => {
     const { value } = event.currentTarget;
@@ -215,21 +213,6 @@ const UpdateBoardForm = () => {
         break;
     }
   };
-
-  const changeContent = useCallback((markdown: string) => {
-    if (markdown.length < 1) {
-      alert("내용은 한자리 이상 입력해야됩니다.");
-      return;
-    }
-
-    setUpdateBoardData((prevState) => {
-      return { ...prevState, content: markdown };
-    });
-
-    setIsBoardDataValid((prevState) => {
-      return { ...prevState, content: contentValidation(markdown) };
-    });
-  }, []);
 
   const cancelHandler = () => {
     navigator(-1);

@@ -2,7 +2,7 @@ import Editor from "@toast-ui/editor";
 import { HookCallback } from "@toast-ui/editor/types/editor";
 import "@toast-ui/editor/dist/toastui-editor.css";
 
-import { useEffect, useRef, useCallback, useState } from "react";
+import { useEffect, useRef, useCallback } from "react";
 import { uploadBoardImage } from "../../../services/BoardService";
 import { useRecoilState } from "recoil";
 import { loggedInUserState } from "../../../recoil";
@@ -37,7 +37,7 @@ const TextEditor = ({ boardId }: TextEditorProps) => {
         callback(`이미지 업로드 실패, ${err.message}`);
       }
     },
-    [loggedInUser.accessToken, boardId]
+    [loggedInUser.accessToken, boardId, setLoggedInUser]
   );
 
   useEffect(() => {
@@ -58,7 +58,7 @@ const TextEditor = ({ boardId }: TextEditorProps) => {
         return { ...prevState, content: markdown };
       });
     });
-  }, [addImageBlobHook]);
+  }, [addImageBlobHook, setUpdateBoardData]);
 
   return <div ref={editorRef}></div>;
 };

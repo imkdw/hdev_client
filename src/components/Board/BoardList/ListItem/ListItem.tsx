@@ -5,7 +5,6 @@ import { EyeIcon } from "../../../../assets/icon/BoardIcon";
 import { searchKeywordState } from "../../../../recoil/board";
 import { IBoardItem } from "../../../../types/board";
 import { dateFormater } from "../../../../utils/Common";
-import { MarkdownViewer } from "../../../Common";
 
 const StyledListItem = styled(Link)`
   width: 30%;

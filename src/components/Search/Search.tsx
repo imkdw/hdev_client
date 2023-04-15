@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Search, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { searchBoards } from "../../services/BoardService";
 import SearchHeader from "./SearchHeader";

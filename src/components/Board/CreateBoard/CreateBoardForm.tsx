@@ -1,6 +1,6 @@
 import { ChangeEvent, useState, useCallback, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { loggedInUserState } from "../../../recoil";
 import { createBoard } from "../../../services/BoardService";

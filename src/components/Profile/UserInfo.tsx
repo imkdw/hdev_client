@@ -86,7 +86,7 @@ const UserInfo = ({ userId }: UserInfoProps) => {
     if (userId) {
       loadProfile();
     }
-  }, [userId, setUserInfo]);
+  }, [userId, setUserInfo, navigator]);
 
   const changeTagHandler = (item: "profile" | "password" | "exit") => {
     setEnableTag({ profile: item === "profile", password: item === "password", exit: item === "exit" });

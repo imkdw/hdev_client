@@ -1,9 +1,7 @@
 import { Link } from "react-router-dom";
-import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { EyeIcon } from "../../assets/icon/BoardIcon";
 import { dateFormater } from "../../utils/Common";
-import { SearchData } from "../../recoil/board";
 
 const StyledSearchItem = styled(Link)`
   width: 30%;
