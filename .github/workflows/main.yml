@@ -1,0 +1,37 @@
+name: CI/CD hdev_server to AWS EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 코드 체크아웃
+        id: checkout-code
+        uses: actions/checkout@v3
+
+      - name: AWS IAM 사용자 설정
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: 리액트 빌드
+        run: |
+          npm install
+          npm run build
+
+      - name: 빌드한 파일 S3에 업로드
+        run: |
+          aws s3 sync ./build ${{ secrets.AWS_S3_BUCKET_URL }} --profile=${{ secrets.AWS_IAM_USERNAME }}
+
+      - name: CloudFront 캐시 무력화 처리
+        uses: dawidd6/action-invalidate-cloudfront-cache@v2
+        with:
+          cloudfront-distribution-id: ${{ secrets.AWS_CLOUDFRONT_ID }}
+          paths: "/*"
