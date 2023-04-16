@@ -27,7 +27,7 @@ jobs:
       - name: 빌드한 파일 S3에 업로드
         uses: jakejarvis/s3-sync-action@master
         with:
-          source: build/
+          source: build/**
           args: --acl public-read
         env:
           AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
