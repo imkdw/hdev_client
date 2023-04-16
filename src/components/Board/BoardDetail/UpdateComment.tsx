@@ -1,7 +1,7 @@
 import { ChangeEvent, useState, FormEvent } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { loggedInUserState } from "../../../recoil";
+import { isLoadingState, loggedInUserState } from "../../../recoil";
 import { boardDetailState } from "../../../recoil/board";
 import { getBoard } from "../../../services/BoardService";
 import { updateComment } from "../../../services/CommentService";
@@ -70,6 +70,7 @@ interface UpdateCommentProps {
 const UpdateComment = ({ commentId, content, editingHandler, commentIdentifier }: UpdateCommentProps) => {
   const loggedInUser = useRecoilValue(loggedInUserState);
   const [boardDetail, setBoardDetail] = useRecoilState(boardDetailState);
+  const setIsLoading = useSetRecoilState(isLoadingState);
 
   const [comment, setComment] = useState(content);
   const [isValidComment, setIsValidComment] = useState(false);
@@ -99,6 +100,7 @@ const UpdateComment = ({ commentId, content, editingHandler, commentIdentifier }
     }
 
     try {
+      setIsLoading(true);
       await updateComment(commentId, comment, loggedInUser.accessToken);
 
       alert("댓글 수정이 완료되었습니다.");
@@ -111,6 +113,8 @@ const UpdateComment = ({ commentId, content, editingHandler, commentIdentifier }
       setBoardDetail(res.data);
     } catch (err: any) {
       alert("에러발생");
+    } finally {
+      setIsLoading(false);
     }
   };
 

@@ -6,6 +6,7 @@ import { useMediaQuery } from "react-responsive";
 import { MobileHeader } from "../../components/Mobile";
 import { useEffect } from "react";
 import { SearchResult } from "../../components/Search";
+import { useLocation } from "react-router-dom";
 
 const StyledSearchPage = styled.div`
   width: 100%;
@@ -19,18 +20,20 @@ const StyledSearchPage = styled.div`
 
 const SearchPage = () => {
   const isMobile = useMediaQuery({ maxWidth: "767px" });
+  const location = useLocation();
+  const searchText = new URLSearchParams(location.search).get("text") as string;
   const [enableMenu, setEnableMenu] = useRecoilState(enableMenuState);
 
   useEffect(() => {
     setEnableMenu(false);
-  }, [setEnableMenu]);
+  }, [setEnableMenu, searchText]);
 
   return (
     <StyledSearchPage>
       {!isMobile && <Menu />}
       {isMobile && <MobileHeader />}
       {enableMenu && <Menu />}
-      <SearchResult />
+      <SearchResult searchText={searchText} />
     </StyledSearchPage>
   );
 };

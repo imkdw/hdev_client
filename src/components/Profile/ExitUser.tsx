@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { FormEvent, useState, ChangeEvent } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { exitUser, exitUserVerify } from "../../services/UserService";
-import { loggedInUserState } from "../../recoil";
+import { isLoadingState, loggedInUserState } from "../../recoil";
 import { useNavigate } from "react-router-dom";
 
 const Form = styled.form`
@@ -94,6 +94,7 @@ const ExitUser = ({ userId }: ExitUSerProps) => {
   const [loggedInUser, setLoggedInUser] = useRecoilState(loggedInUserState);
   const [password, setPassword] = useState("");
   const navigator = useNavigate();
+  const setIsLoading = useSetRecoilState(isLoadingState);
 
   const changeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
@@ -103,6 +104,7 @@ const ExitUser = ({ userId }: ExitUSerProps) => {
     event.preventDefault();
 
     try {
+      setIsLoading(true);
       const res = await exitUserVerify(userId, password, loggedInUser.accessToken);
 
       if (res.data.accessToken) {
@@ -146,8 +148,9 @@ const ExitUser = ({ userId }: ExitUSerProps) => {
         case 404:
           errMessage = "사용자를 찾을수 없습니다.";
       }
-
       alert(errMessage);
+    } finally {
+      setIsLoading(false);
     }
   };
 

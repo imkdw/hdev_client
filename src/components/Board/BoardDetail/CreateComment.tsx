@@ -1,7 +1,7 @@
 import { ChangeEvent, useState, FormEvent } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { loggedInUserState } from "../../../recoil";
+import { isLoadingState, loggedInUserState } from "../../../recoil";
 import { boardDetailState } from "../../../recoil/board";
 import { createComment } from "../../../services";
 import { getBoard } from "../../../services/BoardService";
@@ -66,6 +66,7 @@ const CreateComment = () => {
 
   const [comment, setComment] = useState("");
   const [isValidComment, setIsValidComment] = useState(false);
+  const setIsLoading = useSetRecoilState(isLoadingState);
 
   const commentChangeHandler = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const { value } = event.currentTarget;
@@ -92,6 +93,7 @@ const CreateComment = () => {
     }
 
     try {
+      setIsLoading(true);
       await createComment(boardDetail.boardId, comment, loggedInUser.accessToken);
 
       alert("댓글 작성이 완료되었습니다.");
@@ -103,6 +105,8 @@ const CreateComment = () => {
       setBoardDetail(res.data);
     } catch (err: any) {
       alert("에러발생");
+    } finally {
+      setIsLoading(false);
     }
   };
 

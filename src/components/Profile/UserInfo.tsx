@@ -2,7 +2,7 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { useState, useEffect } from "react";
 import { getProfile } from "../../services";
-import { loggedInUserState } from "../../recoil";
+import { isLoadingState, loggedInUserState } from "../../recoil";
 import { userInfoState } from "../../recoil/user";
 import UserProfileImage from "./UserProfileImage";
 import UpdateProfile from "./Update/UpdateProfile";
@@ -64,6 +64,7 @@ const UserInfo = ({ userId }: UserInfoProps) => {
   const setUserInfo = useSetRecoilState(userInfoState);
   const loggedInUser = useRecoilValue(loggedInUserState);
   const navigator = useNavigate();
+  const setIsLoading = useSetRecoilState(isLoadingState);
 
   const [enableTab, setEnableTag] = useState({
     profile: true,
@@ -74,19 +75,22 @@ const UserInfo = ({ userId }: UserInfoProps) => {
   useEffect(() => {
     const loadProfile = async () => {
       try {
+        setIsLoading(true);
         const res = await getProfile(userId);
         setUserInfo(res.data);
       } catch (err: any) {
         if (err.response.status === 404) {
           navigator("/404");
         }
+      } finally {
+        setIsLoading(false);
       }
     };
 
     if (userId) {
       loadProfile();
     }
-  }, [userId, setUserInfo, navigator]);
+  }, [userId, setUserInfo, navigator, setIsLoading]);
 
   const changeTagHandler = (item: "profile" | "password" | "exit") => {
     setEnableTag({ profile: item === "profile", password: item === "password", exit: item === "exit" });

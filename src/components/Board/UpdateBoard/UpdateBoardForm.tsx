@@ -1,8 +1,8 @@
 import { ChangeEvent, useState, FormEvent, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { loggedInUserState } from "../../../recoil";
+import { isLoadingState, loggedInUserState } from "../../../recoil";
 import { updateBoardDataState } from "../../../recoil/board";
 import { getBoard, updateBoard } from "../../../services/BoardService";
 import { categoryValidation, tagsValidation, titleValidation } from "../../../utils/Board";
@@ -139,6 +139,7 @@ const UpdateBoardForm = () => {
   });
   const [loggedInUser, setLoggedInUser] = useRecoilState(loggedInUserState);
   const navigator = useNavigate();
+  const setIsLoading = useSetRecoilState(isLoadingState);
 
   useEffect(() => {
     const loadBoard = async () => {
@@ -229,6 +230,7 @@ const UpdateBoardForm = () => {
     }
 
     try {
+      setIsLoading(true);
       const res = await updateBoard(boardId, { title, category, tags, content }, loggedInUser.accessToken);
 
       if (res.data.accessToken) {
@@ -268,6 +270,8 @@ const UpdateBoardForm = () => {
       }
 
       alert(message);
+    } finally {
+      setIsLoading(false);
     }
   };
 

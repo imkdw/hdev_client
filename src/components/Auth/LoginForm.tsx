@@ -91,9 +91,8 @@ const LoginForm = () => {
   const submitHandler = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    setIsLoading(true);
-
     try {
+      setIsLoading(true);
       const res = await login(account.email, account.password);
 
       const { accessToken, profileImg, nickname, userId } = res.data;

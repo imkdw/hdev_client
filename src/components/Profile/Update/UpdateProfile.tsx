@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { FormEvent, useState, ChangeEvent, MouseEvent } from "react";
 import { updateProfile } from "../../../services/UserService";
-import { useRecoilState } from "recoil";
-import { loggedInUserState } from "../../../recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { isLoadingState, loggedInUserState } from "../../../recoil";
 import { userInfoState } from "../../../recoil/user";
 import { nicknameValidation } from "../../../utils/Auth";
 
@@ -89,6 +89,7 @@ interface IsValidUpdateData {
 const UpdateProfile = ({ userId }: UpdateProfileProps) => {
   const [loggedInUser, setLoggedInUser] = useRecoilState(loggedInUserState);
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+  const setIsLoading = useSetRecoilState(isLoadingState);
 
   const [updateData, setUpdateData] = useState({
     nickname: userInfo.nickname,
@@ -137,6 +138,7 @@ const UpdateProfile = ({ userId }: UpdateProfileProps) => {
     event.preventDefault();
 
     try {
+      setIsLoading(true);
       const res = await updateProfile(userId, updateData, loggedInUser.accessToken);
 
       if (res.data.accessToken) {
@@ -181,6 +183,8 @@ const UpdateProfile = ({ userId }: UpdateProfileProps) => {
       }
 
       alert(errMessage);
+    } finally {
+      setIsLoading(false);
     }
   };
 

@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { MenuIcon } from "../../../assets/icon";
-import { loggedInUserState } from "../../../recoil";
+import { isLoadingState, loggedInUserState } from "../../../recoil";
 import { boardDetailState } from "../../../recoil/board";
 import { removeBoard } from "../../../services/BoardService";
 import { dateFormater } from "../../../utils/Common";
@@ -86,6 +86,7 @@ const BoardHeader = () => {
   const [loggedInUser, setLoggedInUser] = useRecoilState(loggedInUserState);
   const [enableMenu, setEnableMenu] = useState(false);
   const navigator = useNavigate();
+  const setIsLoading = useSetRecoilState(isLoadingState);
 
   const menuHandler = () => {
     setEnableMenu((prevState) => !prevState);
@@ -93,6 +94,7 @@ const BoardHeader = () => {
 
   const removeHandler = async () => {
     try {
+      setIsLoading(true);
       const isRemove = window.confirm("게시글을 삭제하면 복구가 불가능합니다. 정말 삭제하실껀가요?");
       if (isRemove) {
         const res = await removeBoard(boardDetail.boardId, loggedInUser.accessToken);
@@ -126,6 +128,8 @@ const BoardHeader = () => {
       }
 
       alert(errMessage);
+    } finally {
+      setIsLoading(false);
     }
   };
 

@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { searchBoards } from "../../services/BoardService";
 import SearchHeader from "./SearchHeader";
 import SearchItem from "./SearchItem";
+import { useSetRecoilState } from "recoil";
+import { isLoadingState } from "../../recoil";
 
 const StyledSearch = styled.div`
   height: 100%;
@@ -65,19 +66,24 @@ interface SearchData {
   category2: { name: string } | null;
 }
 
-const SearchResult = () => {
-  const location = useLocation();
-  const searchText = new URLSearchParams(location.search).get("text") as string;
+interface SearchResultProps {
+  searchText: string;
+}
+
+const SearchResult = ({ searchText }: SearchResultProps) => {
   const [boards, setBoards] = useState<SearchData[]>([]);
+  const setIsLoading = useSetRecoilState(isLoadingState);
 
   useEffect(() => {
     const loadBoards = async () => {
+      setIsLoading(true);
       const res = await searchBoards(searchText);
       setBoards(res.data);
+      setIsLoading(false);
     };
 
     loadBoards();
-  }, [searchText]);
+  }, [searchText, setIsLoading]);
 
   return (
     <StyledSearch>

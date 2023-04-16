@@ -1,8 +1,8 @@
 import { ChangeEvent, useState, useCallback, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { loggedInUserState } from "../../../recoil";
+import { isLoadingState, loggedInUserState } from "../../../recoil";
 import { createBoard } from "../../../services/BoardService";
 import { categoryValidation, contentValidation, tagsValidation, titleValidation } from "../../../utils/Board";
 import TextEditor from "./TextEditor";
@@ -148,6 +148,7 @@ const CreateBoardForm = ({ tempBoardId }: CreateBoardFormProps) => {
 
   const [loggedInUser, setLoggedInUser] = useRecoilState(loggedInUserState);
   const navigator = useNavigate();
+  const setIsLoading = useSetRecoilState(isLoadingState);
 
   const changeCategory = (event: ChangeEvent<HTMLSelectElement>) => {
     const { value } = event.currentTarget;
@@ -227,6 +228,7 @@ const CreateBoardForm = ({ tempBoardId }: CreateBoardFormProps) => {
     }
 
     try {
+      setIsLoading(true);
       const res = await createBoard(loggedInUser.accessToken, { title, category, tags, content, tempBoardId });
 
       if (res.data.accessToken) {
@@ -264,6 +266,8 @@ const CreateBoardForm = ({ tempBoardId }: CreateBoardFormProps) => {
       }
 
       alert(message);
+    } finally {
+      setIsLoading(false);
     }
   };
 

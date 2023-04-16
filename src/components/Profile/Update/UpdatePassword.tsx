@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { FormEvent, useState, ChangeEvent } from "react";
-import { useRecoilState } from "recoil";
-import { loggedInUserState } from "../../../recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { isLoadingState, loggedInUserState } from "../../../recoil";
 import { passwordValidation } from "../../../utils/Auth";
 import { updatePassword } from "../../../services/UserService";
 
@@ -98,6 +98,8 @@ const UpdatePassword = ({ userId }: UpdatePasswordProps) => {
     rePassword: null,
   });
 
+  const setIsLoading = useSetRecoilState(isLoadingState);
+
   const updateDataChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.currentTarget;
 
@@ -122,6 +124,7 @@ const UpdatePassword = ({ userId }: UpdatePasswordProps) => {
     event.preventDefault();
 
     try {
+      setIsLoading(true);
       const res = await updatePassword(userId, updateData, loggedInUser.accessToken);
 
       if (res.data.accessToken) {
@@ -160,6 +163,8 @@ const UpdatePassword = ({ userId }: UpdatePasswordProps) => {
       }
 
       alert(errMessage);
+    } finally {
+      setIsLoading(false);
     }
   };
 
