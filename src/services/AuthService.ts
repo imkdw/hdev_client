@@ -53,7 +53,6 @@ export const checkLoggedIn = async (userId: string, accessToken: string) => {
       },
     });
   } catch (err: any) {
-    console.log("에러발생", err.response);
     if (err.response.status === 401 && err.response.data.message !== "not_logged_in") {
       const tokenRes = await token();
       const res = await api.get(`/auth/check/${userId}`, {

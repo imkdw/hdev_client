@@ -37,7 +37,6 @@ function App() {
           nickname,
         });
       } catch (err: any) {
-        alert("인증이 만료되었습니다. 다시 로그인해주세요");
         setLoggedInUser({
           userId: "",
           accessToken: "",

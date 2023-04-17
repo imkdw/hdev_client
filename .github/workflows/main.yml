@@ -1,4 +1,4 @@
-name: CI/CD hdev_server to AWS EC2
+name: CI/CD hdev_client to AWS S3
 
 on:
   push:

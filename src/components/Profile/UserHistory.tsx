@@ -1,12 +1,11 @@
 import { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { categoryDataState } from "../../recoil/board";
 import { getHistory } from "../../services/UserService";
 import { UserBoardHistory, UserCommentHistory } from "../../types/user";
 import { dateFormater } from "../../utils/Common";
-import { isLoadingState } from "../../recoil";
 
 const StyledUserHistory = styled.div`
   width: 48%;
@@ -156,12 +155,10 @@ const UserHistory = ({ userId }: UserHistoryProps) => {
     board: true,
     comment: false,
   });
-  const setIsLoading = useSetRecoilState(isLoadingState);
 
   const historyHandler = useCallback(
     async (item: "board" | "comment") => {
       try {
-        setIsLoading(true);
         const res = await getHistory(userId, item);
 
         if (item === "board") {
@@ -173,10 +170,9 @@ const UserHistory = ({ userId }: UserHistoryProps) => {
         alert("에러발생");
         console.error(err);
       } finally {
-        setIsLoading(false);
       }
     },
-    [userId, setIsLoading]
+    [userId]
   );
 
   useEffect(() => {
