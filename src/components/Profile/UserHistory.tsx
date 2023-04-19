@@ -158,18 +158,12 @@ const UserHistory = ({ userId }: UserHistoryProps) => {
 
   const historyHandler = useCallback(
     async (item: "board" | "comment") => {
-      try {
-        const res = await getHistory(userId, item);
+      const res = await getHistory(userId, item);
 
-        if (item === "board") {
-          setBoards(res.data);
-        } else if (item === "comment") {
-          setCommentsBoard(res.data);
-        }
-      } catch (err: any) {
-        alert("에러발생");
-        console.error(err);
-      } finally {
+      if (item === "board") {
+        setBoards(res.data);
+      } else if (item === "comment") {
+        setCommentsBoard(res.data);
       }
     },
     [userId]

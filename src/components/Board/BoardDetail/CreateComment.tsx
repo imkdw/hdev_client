@@ -104,7 +104,23 @@ const CreateComment = () => {
       const res = await getBoard(boardDetail.boardId);
       setBoardDetail(res.data);
     } catch (err: any) {
-      alert("에러발생");
+      let errMessage = "서버 오류입니다. 다시 시도해주세요.";
+      const { status, data } = err.response;
+      switch (status) {
+        case 400:
+          switch (data.message) {
+            case "invalid_comment":
+              errMessage = "댓글 형식이 올바르지 않습니다.";
+          }
+          break;
+        case 401:
+          switch (data.message) {
+            case "unauthorized_user":
+              errMessage = "로그인이 만료되었습니다. 다시 로그인해주세요";
+          }
+      }
+
+      alert(errMessage);
     } finally {
       setIsLoading(false);
     }
