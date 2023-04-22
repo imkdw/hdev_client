@@ -242,6 +242,7 @@ const UpdateBoardForm = () => {
       alert("게시글 수정이 완료되었습니다.");
       navigator(-1);
     } catch (err: any) {
+      console.log(err);
       const { status, data } = err.response;
       let message = "서버 오류입니다. 다시 시도해주세요.";
       switch (status) {

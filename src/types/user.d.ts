@@ -11,7 +11,7 @@ export interface UserProfileUpdateData {
 
 export interface UserPasswordUpdateData {
   password: string;
-  rePassword: string;
+  changePassword: string;
 }
 
 export interface UserBoardHistory {

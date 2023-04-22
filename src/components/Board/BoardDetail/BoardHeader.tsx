@@ -135,7 +135,7 @@ const BoardHeader = () => {
 
   return (
     <StyledBoardHeader>
-      <ProfileImage profileImg={boardDetail.user.profileImg} />
+      <ProfileImage profileImg={boardDetail.user.profileImg} userId={boardDetail.user.userId} />
       <Writer>
         <Username>{boardDetail.user.nickname}</Username>
         <CreatedAt>

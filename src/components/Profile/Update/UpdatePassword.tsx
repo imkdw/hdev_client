@@ -90,12 +90,12 @@ const UpdatePassword = ({ userId }: UpdatePasswordProps) => {
 
   const [updateData, setUpdateData] = useState({
     password: "",
-    rePassword: "",
+    changePassword: "",
   });
 
   const [isValidUpdateData, setIsValidUpdateData] = useState<IsValidUpdateData>({
     password: null,
-    rePassword: null,
+    changePassword: null,
   });
 
   const setIsLoading = useSetRecoilState(isLoadingState);
@@ -111,7 +111,7 @@ const UpdatePassword = ({ userId }: UpdatePasswordProps) => {
       let isValid = false;
 
       switch (name) {
-        case "rePassword":
+        case "changePassword":
           isValid = passwordValidation(value);
           break;
       }
@@ -136,11 +136,11 @@ const UpdatePassword = ({ userId }: UpdatePasswordProps) => {
       alert("비밀번호 변경이 완료되었습니다");
       setUpdateData({
         password: "",
-        rePassword: "",
+        changePassword: "",
       });
     } catch (err: any) {
       const { status, data } = err.response;
-
+      console.log(err);
       let errMessage = "서버 오류입니다. 다시 시도해주세요.";
       switch (status) {
         case 400:
@@ -188,15 +188,15 @@ const UpdatePassword = ({ userId }: UpdatePasswordProps) => {
         </Label>
         <Input
           type="password"
-          name="rePassword"
-          value={updateData.rePassword}
+          name="changePassword"
+          value={updateData.changePassword}
           onChange={updateDataChangeHandler}
           placeholder="영문, 숫자, 특수문자를 포함하여 10자리 이상"
         />
       </FormControl>
       {loggedInUser.userId === userId && (
         <Buttons>
-          {isValidUpdateData.rePassword ? (
+          {isValidUpdateData.changePassword ? (
             <Button type="submit">저장하기</Button>
           ) : (
             <DisableButton type="button" disabled>

@@ -104,6 +104,7 @@ const CreateComment = () => {
       const res = await getBoard(boardDetail.boardId);
       setBoardDetail(res.data);
     } catch (err: any) {
+      console.error(err);
       let errMessage = "서버 오류입니다. 다시 시도해주세요.";
       const { status, data } = err.response;
       switch (status) {
@@ -128,7 +129,7 @@ const CreateComment = () => {
 
   return (
     <StyledCreateComment>
-      <ProfileImage profileImg={loggedInUser.profileImg} />
+      <ProfileImage profileImg={loggedInUser.profileImg} userId={boardDetail.user.userId} />
       <InputWrapper onSubmit={submitHandler}>
         <Textarea placeholder="1~200자 사이로 입력해주세요" onChange={commentChangeHandler} value={comment} />
         {isValidComment ? (

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import Editor from "@toast-ui/editor";
 import { HookCallback } from "@toast-ui/editor/types/editor";
 import "@toast-ui/editor/dist/toastui-editor.css";
@@ -58,7 +59,7 @@ const TextEditor = ({ boardId }: TextEditorProps) => {
         return { ...prevState, content: markdown };
       });
     });
-  }, [addImageBlobHook, updateBoardData.content, setUpdateBoardData]);
+  }, []);
 
   return <div ref={editorRef}></div>;
 };

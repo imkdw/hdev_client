@@ -1,7 +1,5 @@
 import { Link } from "react-router-dom";
-import { useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { loggedInUserState } from "../../../recoil";
 
 const StyledProfile = styled(Link)`
   width: 50px;
@@ -17,13 +15,12 @@ const ProfileImg = styled.img`
 
 interface ProfileImageProps {
   profileImg: string;
+  userId: string;
 }
 
-const ProfileImage = ({ profileImg }: ProfileImageProps) => {
-  const loggedInUser = useRecoilValue(loggedInUserState);
-
+const ProfileImage = ({ profileImg, userId }: ProfileImageProps) => {
   return (
-    <StyledProfile to={`/users/${loggedInUser.userId}`}>
+    <StyledProfile to={`/users/${userId}`}>
       <ProfileImg src={profileImg} />
     </StyledProfile>
   );

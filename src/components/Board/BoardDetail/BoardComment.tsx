@@ -1,7 +1,7 @@
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { MenuIcon } from "../../../assets/icon";
-import { isLoadingState, loggedInUserState } from "../../../recoil";
+import { loggedInUserState } from "../../../recoil";
 import { boardDetailState } from "../../../recoil/board";
 import { dateFormater } from "../../../utils/Common";
 import CreateComment from "./CreateComment";
@@ -102,7 +102,6 @@ const BoardComment = () => {
   const [enableButton, setEnableButton] = useState<EnableButton>({});
   const [isEditComment, setIsEditComment] = useState<IsEditComment>({});
   const setBoardDetail = useSetRecoilState(boardDetailState);
-  const setIsLoading = useSetRecoilState(isLoadingState);
 
   const enableButtonHandler = (commentIdentifier: string) => {
     setEnableButton((prevState) => {
@@ -150,7 +149,6 @@ const BoardComment = () => {
     const isRemove = window.confirm("삭제한 댓글은 복구가 불가능합니다. 정말 삭제하실껀가요?");
     if (isRemove) {
       try {
-        setIsLoading(true);
         await removeComment(commentId, loggedInUser.accessToken);
         // 댓글 작성이후 api 호출해서 댓글 내용 최신화
         const res = await getBoard(boardDetail.boardId);
@@ -176,8 +174,6 @@ const BoardComment = () => {
         }
 
         alert(errMessage);
-      } finally {
-        setIsLoading(false);
       }
     }
   };
@@ -198,7 +194,7 @@ const BoardComment = () => {
           ) : (
             <>
               <Header>
-                <ProfileImage profileImg={comment.user.profileImg} />
+                <ProfileImage profileImg={comment.user.profileImg} userId={comment.user.userId} />
                 <Writer>
                   <Username>{comment.user.nickname}</Username>
                   <CreatedAt>{dateFormater(comment.createdAt)}</CreatedAt>

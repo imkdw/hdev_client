@@ -120,7 +120,7 @@ const UpdateComment = ({ commentId, content, editingHandler, commentIdentifier }
 
   return (
     <StyledUpdateComment>
-      <ProfileImage profileImg={loggedInUser.profileImg} />
+      <ProfileImage profileImg={loggedInUser.profileImg} userId={boardDetail.user.userId} />
       <InputWrapper onSubmit={submitHandler}>
         <Textarea placeholder="1~200자 사이로 입력해주세요" onChange={commentChangeHandler} value={comment} />
         {isValidComment ? (

@@ -19,7 +19,7 @@ const StyledMenu = styled.div`
   border-right: 1px solid #e5e6e8;
   align-items: center;
   position: relative;
-  z-index: 999;
+  z-index: 998;
 
   @keyframes loadEffect {
     0% {

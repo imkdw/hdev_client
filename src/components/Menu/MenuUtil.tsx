@@ -57,7 +57,7 @@ const MenuUtil = () => {
       {loggedInUser.accessToken && (
         <>
           <ProfileWrapper>
-            <ProfileImage profileImg={loggedInUser.profileImg} />
+            <ProfileImage profileImg={loggedInUser.profileImg} userId={loggedInUser.userId} />
             <Nickname to={"/users/" + loggedInUser.userId}>{loggedInUser.nickname}</Nickname>
           </ProfileWrapper>
         </>

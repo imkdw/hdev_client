@@ -162,8 +162,10 @@ const UserHistory = ({ userId }: UserHistoryProps) => {
 
       if (item === "board") {
         setBoards(res.data);
+        setCommentsBoard([]);
       } else if (item === "comment") {
         setCommentsBoard(res.data);
+        setBoards([]);
       }
     },
     [userId]
@@ -218,43 +220,49 @@ const UserHistory = ({ userId }: UserHistoryProps) => {
         </TabItem>
       </HistoryTab>
       <History>
-        {boards.length === 0 && <NoData>데이터가 없습니다.</NoData>}
-        {boards.length > 0 &&
-          (enableTab.board
-            ? boards.map((board) => (
-                <HistoryItem key={board.boardId} to={"/boards/" + board.boardId}>
-                  <HistoryCategory>
-                    카테고리 :{" "}
-                    <CategoryText>
-                      {board.category2
-                        ? `${categoryData[board.category1.name]}-${categoryData[board.category2.name]}`
-                        : `${categoryData[board.category1.name]}`}
-                    </CategoryText>
-                  </HistoryCategory>
-                  <HistoryData>
-                    <BoardTitle>{board.title}</BoardTitle>
-                    <BoardCreatedAt>{dateFormater(board.createdAt)}</BoardCreatedAt>
-                  </HistoryData>
-                </HistoryItem>
-              ))
-            : commentsBoards.map((commentBoard) => (
-                <HistoryItem key={commentBoard.board.boardId} to={"/boards/" + commentBoard.board.boardId}>
-                  <HistoryCategory>
-                    카테고리 :{" "}
-                    <CategoryText>
-                      {commentBoard.board.category2
-                        ? `${categoryData[commentBoard.board.category1.name]}-${
-                            categoryData[commentBoard.board.category2.name]
-                          }`
-                        : `${categoryData[commentBoard.board.category1.name]}`}
-                    </CategoryText>
-                  </HistoryCategory>
-                  <HistoryData>
-                    <BoardTitle>{commentBoard.board.title}</BoardTitle>
-                    <BoardCreatedAt>{dateFormater(commentBoard.board.createdAt)}</BoardCreatedAt>
-                  </HistoryData>
-                </HistoryItem>
-              )))}
+        {boards ? (
+          boards.map((board) => (
+            <HistoryItem key={board.boardId} to={"/boards/" + board.boardId}>
+              <HistoryCategory>
+                카테고리 :{" "}
+                <CategoryText>
+                  {board.category2
+                    ? `${categoryData[board.category1.name]}-${categoryData[board.category2.name]}`
+                    : `${categoryData[board.category1.name]}`}
+                </CategoryText>
+              </HistoryCategory>
+              <HistoryData>
+                <BoardTitle>{board.title}</BoardTitle>
+                <BoardCreatedAt>{dateFormater(board.createdAt)}</BoardCreatedAt>
+              </HistoryData>
+            </HistoryItem>
+          ))
+        ) : (
+          <NoData>데이터가 없습니다.</NoData>
+        )}
+
+        {commentsBoards ? (
+          commentsBoards.map((commentBoard) => (
+            <HistoryItem key={commentBoard.board.boardId} to={"/boards/" + commentBoard.board.boardId}>
+              <HistoryCategory>
+                카테고리 :{" "}
+                <CategoryText>
+                  {commentBoard.board.category2
+                    ? `${categoryData[commentBoard.board.category1.name]}-${
+                        categoryData[commentBoard.board.category2.name]
+                      }`
+                    : `${categoryData[commentBoard.board.category1.name]}`}
+                </CategoryText>
+              </HistoryCategory>
+              <HistoryData>
+                <BoardTitle>{commentBoard.board.title}</BoardTitle>
+                <BoardCreatedAt>{dateFormater(commentBoard.board.createdAt)}</BoardCreatedAt>
+              </HistoryData>
+            </HistoryItem>
+          ))
+        ) : (
+          <NoData>데이터가 없습니다.</NoData>
+        )}
       </History>
     </StyledUserHistory>
   );
