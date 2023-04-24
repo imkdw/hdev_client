@@ -53,7 +53,7 @@ const Button = styled.div`
 
   @media screen and (max-width: 767px) {
     width: 40px;
-    height: 40px;
+    align-items: flex-start;
   }
 `;
 
@@ -75,6 +75,7 @@ const MenuItem = styled(Link)`
   align-items: center;
   justify-content: center;
   font-size: 14px;
+  background-color: white;
 
   &:hover {
     background-color: #dbdbdb;

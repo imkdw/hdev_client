@@ -21,7 +21,7 @@ interface ProfileImageProps {
 const ProfileImage = ({ profileImg, userId }: ProfileImageProps) => {
   return (
     <StyledProfile to={`/users/${userId}`}>
-      <ProfileImg src={profileImg} />
+      <ProfileImg src={profileImg || "https://s3.ap-northeast-2.amazonaws.com/dongwoo.personal/2143305.png"} />
     </StyledProfile>
   );
 };

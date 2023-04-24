@@ -67,6 +67,7 @@ const CreateComment = () => {
   const [comment, setComment] = useState("");
   const [isValidComment, setIsValidComment] = useState(false);
   const setIsLoading = useSetRecoilState(isLoadingState);
+  const setLoggedInUser = useSetRecoilState(loggedInUserState);
 
   const commentChangeHandler = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const { value } = event.currentTarget;
@@ -94,15 +95,20 @@ const CreateComment = () => {
 
     try {
       setIsLoading(true);
-      await createComment(boardDetail.boardId, comment, loggedInUser.accessToken);
+      const res = await createComment(boardDetail.boardId, comment, loggedInUser.accessToken);
+      if (res.data.accessToken) {
+        setLoggedInUser((prevState) => {
+          return { ...prevState, accessToken: res.data.accessToken };
+        });
+      }
 
       alert("댓글 작성이 완료되었습니다.");
       setComment("");
       setIsValidComment(false);
 
       // 댓글 작성이후 api 호출해서 댓글 내용 최신화
-      const res = await getBoard(boardDetail.boardId);
-      setBoardDetail(res.data);
+      const boardRes = await getBoard(boardDetail.boardId);
+      setBoardDetail(boardRes.data);
     } catch (err: any) {
       let errMessage = "서버 오류입니다. 다시 시도해주세요.";
       const { status, data } = err.response;

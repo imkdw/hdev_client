@@ -16,7 +16,11 @@ const StyledBoardContent = styled.div`
 `;
 
 const Title = styled.h1`
-  font-size: 40px;
+  font-size: 35px;
+
+  @media screen and (max-width: 767px) {
+    font-size: 20px;
+  }
 `;
 
 const TagsAndRecommend = styled.div`

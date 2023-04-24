@@ -13,7 +13,6 @@ export const createComment = async (boardId: string, comment: string, accessToke
       }
     );
   } catch (err: any) {
-    console.log(err);
     if (err.response.status === 401) {
       const tokenRes = await token();
       const res = await api.post(

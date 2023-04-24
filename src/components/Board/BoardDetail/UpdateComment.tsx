@@ -71,6 +71,7 @@ const UpdateComment = ({ commentId, content, editingHandler, commentIdentifier }
   const loggedInUser = useRecoilValue(loggedInUserState);
   const [boardDetail, setBoardDetail] = useRecoilState(boardDetailState);
   const setIsLoading = useSetRecoilState(isLoadingState);
+  const setLoggedInUser = useSetRecoilState(loggedInUserState);
 
   const [comment, setComment] = useState(content);
   const [isValidComment, setIsValidComment] = useState(false);
@@ -101,7 +102,13 @@ const UpdateComment = ({ commentId, content, editingHandler, commentIdentifier }
 
     try {
       setIsLoading(true);
-      await updateComment(commentId, comment, loggedInUser.accessToken);
+      const res = await updateComment(commentId, comment, loggedInUser.accessToken);
+
+      if (res.data.accessToken) {
+        setLoggedInUser((prevState) => {
+          return { ...prevState, accessToken: res.data.accessToken };
+        });
+      }
 
       alert("댓글 수정이 완료되었습니다.");
       setComment("");
@@ -109,10 +116,26 @@ const UpdateComment = ({ commentId, content, editingHandler, commentIdentifier }
       editingHandler(commentIdentifier);
 
       // 댓글 작성이후 api 호출해서 댓글 내용 최신화
-      const res = await getBoard(boardDetail.boardId);
-      setBoardDetail(res.data);
+      const boardRes = await getBoard(boardDetail.boardId);
+      setBoardDetail(boardRes.data);
     } catch (err: any) {
-      alert("에러발생");
+      let errMessage = "서버 오류입니다. 다시 시도해주세요.";
+      const { status, data } = err.response;
+      switch (status) {
+        case 400:
+          switch (data.message) {
+            case "invalid_comment":
+              errMessage = "댓글 형식이 올바르지 않습니다.";
+          }
+          break;
+        case 401:
+          switch (data.message) {
+            case "unauthorized_user":
+              errMessage = "로그인이 만료되었습니다. 다시 로그인해주세요";
+          }
+      }
+
+      alert(errMessage);
     } finally {
       setIsLoading(false);
     }

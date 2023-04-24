@@ -33,6 +33,10 @@ const Comment = styled.div`
   border-bottom: 1px solid #d1d1d1;
   padding: 0 0 20px 0;
   gap: 20px;
+
+  @media screen and (max-width: 767px) {
+    min-height: 120px;
+  }
 `;
 
 const Header = styled.div`
@@ -42,6 +46,7 @@ const Header = styled.div`
   gap: 10px;
   position: relative;
 `;
+
 const Writer = styled.div`
   height: 100%;
   display: flex;
@@ -54,7 +59,12 @@ const Username = styled.p`
 
 const CreatedAt = styled.p`
   color: #767e8c;
+
+  @media screen and (max-width: 767px) {
+    font-size: 14px;
+  }
 `;
+
 const MenuButton = styled.div`
   width: 100px;
   position: absolute;
