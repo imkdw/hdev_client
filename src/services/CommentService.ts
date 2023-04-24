@@ -21,7 +21,7 @@ export const createComment = async (boardId: string, comment: string, accessToke
         { boardId, comment },
         {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${tokenRes.data.accessToken}`,
           },
         }
       );
@@ -39,7 +39,9 @@ export const removeComment = async (commentId: number, accessToken: string) => {
   } catch (err: any) {
     if (err.response.status === 401) {
       const tokenRes = await token();
-      const res = await api.delete(`/comments/${commentId}`, { headers: { Authorization: `Bearer ${accessToken}` } });
+      const res = await api.delete(`/comments/${commentId}`, {
+        headers: { Authorization: `Bearer ${tokenRes.data.accessToken}` },
+      });
       res.data.accessToken = tokenRes.data.accessToken;
       return res;
     }
@@ -67,7 +69,7 @@ export const updateComment = async (commentId: number, updatedComment: string, a
         { comment: updatedComment },
         {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${tokenRes.data.accessToken}`,
           },
         }
       );

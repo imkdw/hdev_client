@@ -109,6 +109,13 @@ export const updateProfileImage = async (userId: string, formData: FormData, acc
   }
 };
 
+/**
+ * [PATCH] /users/:userId/verify - 회원탈퇴 이전 사용자 인증
+ * @param userId
+ * @param password
+ * @param accessToken
+ * @returns
+ */
 export const exitUserVerify = async (userId: string, password: string, accessToken: string) => {
   try {
     return await api.patch(
@@ -140,6 +147,12 @@ export const exitUserVerify = async (userId: string, password: string, accessTok
   }
 };
 
+/**
+ * [DELETE] /users/:userId - 회원탈퇴
+ * @param userId
+ * @param accessToken
+ * @returns
+ */
 export const exitUser = async (userId: string, accessToken: string) => {
   try {
     return await api.delete(`/users/${userId}`, {
@@ -163,6 +176,12 @@ export const exitUser = async (userId: string, accessToken: string) => {
   }
 };
 
+/**
+ * [GET] /users/:userId/history?item= - 사용자 활동내역 조회
+ * @param userId
+ * @param item
+ * @returns
+ */
 export const getHistory = async (userId: string, item: "board" | "comment") => {
   try {
     return await api.get(`users/${userId}/history?item=${item}`);
