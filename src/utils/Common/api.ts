@@ -4,7 +4,7 @@ let api: AxiosInstance;
 
 if (process.env.NODE_ENV === "development") {
   api = axios.create({
-    baseURL: "http://dongeu47.iptime.org:5000",
+    baseURL: "http://localhost:5000",
     withCredentials: true,
   });
 } else {

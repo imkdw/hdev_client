@@ -7,15 +7,12 @@ const StyledRecentItem = styled(Link)`
   width: 100%;
   height: 25%;
   display: flex;
-  flex-direction: column;
   border-bottom: 1px solid #e5e6e8;
-  align-items: center;
-  cursor: pointer;
+  flex-direction: column;
   justify-content: flex-end;
-  gap: 5px;
+  cursor: pointer;
 
   @media screen and (max-width: 767px) {
-    gap: 10px;
   }
 
   &:hover {
@@ -25,7 +22,7 @@ const StyledRecentItem = styled(Link)`
 
 const Top = styled.div`
   width: 97%;
-  height: auto;
+  height: 40%;
   display: flex;
   align-items: center;
   position: relative;
@@ -75,11 +72,11 @@ const CountNumber = styled.div`
 
 const Bottom = styled.div`
   width: 97%;
-  height: auto;
+  height: 47%;
   display: flex;
+  align-items: flex-end;
   position: relative;
   margin-bottom: 5px;
-  align-items: flex-end;
 `;
 
 const Title = styled.div`
