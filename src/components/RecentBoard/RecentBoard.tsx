@@ -18,31 +18,19 @@ const StyledRecentBoard = styled.div`
 `;
 
 const Wrapper = styled.div`
-  width: 90%;
-  height: 90%;
+  width: 95%;
+  height: 850px;
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-evenly;
-  margin-top: 20px;
 
   @media screen and (max-width: 767px) {
-    gap: 20px;
+    flex-direction: column;
+    height: 1500px;
   }
-`;
-
-const BoardWrapper = styled.div`
-  width: 40%;
-  min-width: 400px;
-  height: 48%;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
 `;
 
 const SortationTitle = styled.div`
   width: 90%;
-  min-height: 50px;
+  height: 50px;
   background-color: #2c65ff;
   border-radius: 20px;
   display: flex;
@@ -64,6 +52,31 @@ const NoContent = styled.p`
   color: #838383;
   font-size: 22px;
   margin-top: 20px;
+`;
+
+const Content = styled.ul`
+  width: 50%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+
+  @media screen and (max-width: 767px) {
+    width: 100%;
+
+    &:first-child {
+      margin-top: 20px;
+    }
+  }
+`;
+
+const ContentItem = styled.li`
+  width: 90%;
+  height: 49%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 interface RecentBoardResponse {
@@ -98,46 +111,50 @@ const RecentBoard = () => {
   return (
     <StyledRecentBoard>
       <Wrapper>
-        <BoardWrapper>
-          <SortationTitle>
-            <TitleText>공지사항</TitleText>
-          </SortationTitle>
-          {boards && boards["notice"].length !== 0 ? (
-            <RecentBoardBox boardData={boards["notice"]} />
-          ) : (
-            <NoContent>최근 게시글이 없습니다</NoContent>
-          )}
-        </BoardWrapper>{" "}
-        <BoardWrapper>
-          <SortationTitle>
-            <TitleText>질문답변</TitleText>
-          </SortationTitle>
-          {boards && boards["qna"].length !== 0 ? (
-            <RecentBoardBox boardData={boards["qna"]} />
-          ) : (
-            <NoContent>최근 게시글이 없습니다</NoContent>
-          )}
-        </BoardWrapper>{" "}
-        <BoardWrapper>
-          <SortationTitle>
-            <TitleText>지식공유</TitleText>
-          </SortationTitle>
-          {boards && boards["knowledge"].length !== 0 ? (
-            <RecentBoardBox boardData={boards["knowledge"]} />
-          ) : (
-            <NoContent>최근 게시글이 없습니다</NoContent>
-          )}
-        </BoardWrapper>{" "}
-        <BoardWrapper>
-          <SortationTitle>
-            <TitleText>인원모집</TitleText>
-          </SortationTitle>
-          {boards && boards["recruitment"].length !== 0 ? (
-            <RecentBoardBox boardData={boards["recruitment"]} />
-          ) : (
-            <NoContent>최근 게시글이 없습니다</NoContent>
-          )}
-        </BoardWrapper>
+        <Content>
+          <ContentItem>
+            <SortationTitle>
+              <TitleText>공지사항</TitleText>
+            </SortationTitle>
+            {boards && boards["notice"].length !== 0 ? (
+              <RecentBoardBox boardData={boards["notice"]} />
+            ) : (
+              <NoContent>최근 게시글이 없습니다</NoContent>
+            )}
+          </ContentItem>
+          <ContentItem>
+            <SortationTitle>
+              <TitleText>질문답변</TitleText>
+            </SortationTitle>
+            {boards && boards["qna"].length !== 0 ? (
+              <RecentBoardBox boardData={boards["qna"]} />
+            ) : (
+              <NoContent>최근 게시글이 없습니다</NoContent>
+            )}
+          </ContentItem>
+        </Content>
+        <Content>
+          <ContentItem>
+            <SortationTitle>
+              <TitleText>지식공유</TitleText>
+            </SortationTitle>
+            {boards && boards["knowledge"].length !== 0 ? (
+              <RecentBoardBox boardData={boards["knowledge"]} />
+            ) : (
+              <NoContent>최근 게시글이 없습니다</NoContent>
+            )}
+          </ContentItem>
+          <ContentItem>
+            <SortationTitle>
+              <TitleText>인원모집</TitleText>
+            </SortationTitle>
+            {boards && boards["recruitment"].length !== 0 ? (
+              <RecentBoardBox boardData={boards["recruitment"]} />
+            ) : (
+              <NoContent>최근 게시글이 없습니다</NoContent>
+            )}
+          </ContentItem>
+        </Content>
       </Wrapper>
     </StyledRecentBoard>
   );

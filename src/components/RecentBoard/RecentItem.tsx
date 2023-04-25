@@ -5,15 +5,13 @@ import { dateFormater } from "../../utils/Common";
 
 const StyledRecentItem = styled(Link)`
   width: 100%;
-  height: 25%;
+  height: 24%;
   display: flex;
   border-bottom: 1px solid #e5e6e8;
   flex-direction: column;
   justify-content: flex-end;
+  align-items: center;
   cursor: pointer;
-
-  @media screen and (max-width: 767px) {
-  }
 
   &:hover {
     background-color: #dbdbdb;
