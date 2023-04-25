@@ -169,17 +169,15 @@ const BoardComment = () => {
         let errMessage = "서버 오류입니다. 다시 시도해주세요.";
         switch (status) {
           case 401:
-            switch (data.message) {
-              case "unauthorized_user":
-                errMessage = "인증되지 않은 사용자입니다. 메일을 확인해주세요";
-            }
+            errMessage = "인증되지 않은 사용자입니다. 메일을 확인해주세요";
+            break;
+
+          case 403:
+            errMessage = "권한이 없습니다.";
             break;
 
           case 404:
-            switch (data.message) {
-              case "comment_not_found":
-                errMessage = "댓글을 찾을 수 없습니다.";
-            }
+            errMessage = "댓글을 찾을 수 없습니다.";
             break;
         }
 

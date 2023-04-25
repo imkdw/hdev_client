@@ -123,16 +123,16 @@ const UpdateComment = ({ commentId, content, editingHandler, commentIdentifier }
       const { status, data } = err.response;
       switch (status) {
         case 400:
-          switch (data.message) {
-            case "invalid_comment":
-              errMessage = "댓글 형식이 올바르지 않습니다.";
-          }
+          errMessage = "댓글 형식이 올바르지 않습니다.";
           break;
+
         case 401:
-          switch (data.message) {
-            case "unauthorized_user":
-              errMessage = "로그인이 만료되었습니다. 다시 로그인해주세요";
-          }
+          errMessage = "로그인이 만료되었습니다. 다시 로그인해주세요";
+          break;
+
+        case 403:
+          errMessage = "권한이 없습니다.";
+          break;
       }
 
       alert(errMessage);
