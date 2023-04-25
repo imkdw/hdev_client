@@ -145,6 +145,10 @@ const ExitUser = ({ userId }: ExitUSerProps) => {
           errMessage = "인증이 만료되었습니다. 다시 로그인해주세요.";
           break;
 
+        case 403:
+          errMessage = "권한이 없습니다.";
+          break;
+
         case 404:
           errMessage = "사용자를 찾을수 없습니다.";
       }

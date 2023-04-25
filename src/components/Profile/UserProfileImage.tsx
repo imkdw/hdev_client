@@ -117,8 +117,18 @@ const UserProfileImage = ({ userId }: UserProfileImageProps) => {
         return { ...prevState, profileImg: res.data.profileImg };
       });
     } catch (err: any) {
-      alert("에러발생");
-      console.error(err);
+      let errMessage = "서버 오류입니다. 다시 시도해주세요.";
+      const { status } = err.response;
+      switch (status) {
+        case 401:
+          errMessage = "인증이 만료되었습니다. 다시 로그인해주세요.";
+          break;
+
+        case 403:
+          errMessage = "권한이 없습니다.";
+      }
+
+      alert(errMessage);
     }
   };
 

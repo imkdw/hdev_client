@@ -113,10 +113,10 @@ const BoardHeader = () => {
       let errMessage = "서버 오류입니다. 다시 시도해주세요.";
 
       switch (status) {
-        case 401:
+        case 403:
           switch (data.message) {
-            case "unauthorized_user":
-              errMessage = "인증되지 않은 사용자입니다. 다시 로그인해주세요";
+            case "user_mismatch":
+              errMessage = "권한이 없습니다.";
           }
           break;
 
