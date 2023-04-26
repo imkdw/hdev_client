@@ -201,7 +201,7 @@ const RegisterForm = () => {
           <PasswordIcon />
           <Input
             type="password"
-            placeholder="영문, 숫자, 특수문자를 포함하여 10자리 이상 입력해주세요"
+            placeholder="영문, 숫자, 특수문자를 포함하여 10~30자리 사이로 입력해주세요"
             name="password"
             onChange={accountChangeHandler}
             value={account.password}

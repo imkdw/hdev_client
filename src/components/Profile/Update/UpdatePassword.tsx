@@ -195,7 +195,7 @@ const UpdatePassword = ({ userId }: UpdatePasswordProps) => {
           name="changePassword"
           value={updateData.changePassword}
           onChange={updateDataChangeHandler}
-          placeholder="영문, 숫자, 특수문자를 포함하여 10자리 이상"
+          placeholder="영문, 숫자, 특수문자를 포함하여 10~30자리"
         />
       </FormControl>
       {loggedInUser.userId === userId && (
