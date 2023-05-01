@@ -120,7 +120,7 @@ const UpdateComment = ({ commentId, content, editingHandler, commentIdentifier }
       setBoardDetail(boardRes.data);
     } catch (err: any) {
       let errMessage = "서버 오류입니다. 다시 시도해주세요.";
-      const { status, data } = err.response;
+      const { status } = err.response;
       switch (status) {
         case 400:
           errMessage = "댓글 형식이 올바르지 않습니다.";
