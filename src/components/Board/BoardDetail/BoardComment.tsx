@@ -164,7 +164,7 @@ const BoardComment = () => {
         const res = await getBoard(boardDetail.boardId);
         setBoardDetail(res.data);
       } catch (err: any) {
-        const { status, data } = err.response;
+        const { status } = err.response;
 
         let errMessage = "서버 오류입니다. 다시 시도해주세요.";
         switch (status) {
