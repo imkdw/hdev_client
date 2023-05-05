@@ -1,10 +1,8 @@
 import styled from "styled-components";
 import CreateBoardForm from "../../components/Board/CreateBoard/CreateBoardForm";
 import { Menu } from "../../components/Menu";
-import { useEffect } from "react";
 import { useRecoilValue } from "recoil";
-import { enableMenuState, loggedInUserState } from "../../recoil";
-import { useNavigate } from "react-router-dom";
+import { enableMenuState } from "../../recoil";
 import { v4 } from "uuid";
 import { useMediaQuery } from "react-responsive";
 import { MobileHeader } from "../../components/Mobile";
@@ -21,16 +19,8 @@ const StyledCreateBoardPage = styled.div`
 
 const CreateBoardPage = () => {
   const tempBoardId = v4();
-  const loggedInUser = useRecoilValue(loggedInUserState);
-  const navigator = useNavigate();
   const isMobile = useMediaQuery({ maxWidth: "767px" });
   const enableSideMenu = useRecoilValue(enableMenuState);
-
-  useEffect(() => {
-    if (!loggedInUser.accessToken) {
-      alert("로그인이 필요한 서비스 입니다.");
-    }
-  }, [navigator, loggedInUser.accessToken]);
 
   return (
     <StyledCreateBoardPage>
