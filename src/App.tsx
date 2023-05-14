@@ -26,6 +26,7 @@ function App() {
       if (!storageUser) {
         return;
       }
+
       const { accessToken, userId, profileImg, nickname } = JSON.parse(storageUser);
 
       try {
@@ -43,6 +44,7 @@ function App() {
           profileImg: "",
           nickname: "",
         });
+        localStorage.removeItem("loggedInUser");
       }
     };
 
