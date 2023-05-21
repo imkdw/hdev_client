@@ -145,6 +145,7 @@ export const getRecentBoards = async () => {
   try {
     return await api.get("/boards/recent");
   } catch (err: any) {
+    console.error(err);
     throw err;
   }
 };
