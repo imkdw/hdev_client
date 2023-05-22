@@ -144,9 +144,14 @@ export const uploadBoardImage = async (formData: FormData, accessToken: string) 
 export const getRecentBoards = async () => {
   try {
     return await api.get("/boards/recent");
-  } catch (err: any) {
-    console.error(err);
-    throw err;
+  } catch (err) {
+    // TODO: DNS 에러 발생시 서버측에 최근게시글 데이터 재요청
+    try {
+      return await api.get("/boards/recent");
+    } catch (retryErr) {
+      console.error(retryErr);
+      throw retryErr;
+    }
   }
 };
 
