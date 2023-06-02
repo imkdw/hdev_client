@@ -54,6 +54,11 @@ const Form = styled.div`
   }
 `;
 
+const GoogleLogin = styled.a`
+  color: blue;
+  font-weight: bold;
+`;
+
 interface AuthPageProps {
   type: string;
 }
@@ -73,6 +78,16 @@ const AuthPage = ({ type }: AuthPageProps) => {
         <Form>
           <TabMenu type={type} />
           <Logo width={200} height={100} />
+          <GoogleLogin
+            href="https://accounts.google.com/o/oauth2/v2/auth?
+                  scope=https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile&
+                  response_type=token&
+                  redirect_uri=http://localhost:3000&
+                  client_id=410471175654-gu11onos1pgutokjciklfisb9ckv8t2d.apps.googleusercontent.com"
+            target="_blank"
+          >
+            구글로그인(임시)
+          </GoogleLogin>
           {type === "login" && <LoginForm />}
           {type === "register" && <RegisterForm />}
         </Form>
