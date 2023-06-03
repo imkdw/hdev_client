@@ -15,6 +15,7 @@ import ProfilePage from "./pages/User/ProfilePage";
 import { useEffect } from "react";
 import SearchPage from "./pages/Search/SearchPage";
 import { checkLoggedIn } from "./services/AuthService";
+import GoogleAuth from "./pages/Auth/GoogleAuth";
 
 function App() {
   const isLoading = useRecoilValue(isLoadingState);
@@ -72,6 +73,7 @@ function App() {
         <Route path="/boards/:boardId" element={<BoardDetailPage />} />
         <Route path="/users/:userId" element={<ProfilePage />} />
         <Route path="/search" element={<SearchPage />} />
+        <Route path="/auth/google" element={<GoogleAuth />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>

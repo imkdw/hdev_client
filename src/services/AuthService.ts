@@ -67,3 +67,11 @@ export const checkLoggedIn = async (userId: string, accessToken: string) => {
     throw err;
   }
 };
+
+export const googleAuth = async (accessToken: string) => {
+  return await api.get(`/auth/google`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+};
