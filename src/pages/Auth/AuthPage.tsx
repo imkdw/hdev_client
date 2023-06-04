@@ -59,6 +59,11 @@ const GoogleLogin = styled.button`
   font-weight: bold;
 `;
 
+const NaverLogin = styled.button`
+  color: green;
+  font-weight: bold;
+`;
+
 interface AuthPageProps {
   type: string;
 }
@@ -76,6 +81,8 @@ const AuthPage = ({ type }: AuthPageProps) => {
     window.location.href = `${oAuthEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=${responseType}&scope=${scope}`;
   };
 
+  const naverHandler = () => {};
+
   useEffect(() => {
     setEnableMenu(false);
   }, [setEnableMenu]);
@@ -89,6 +96,7 @@ const AuthPage = ({ type }: AuthPageProps) => {
           <TabMenu type={type} />
           <Logo width={200} height={100} />
           <GoogleLogin onClick={googleHandler}>구글로그인(임시)</GoogleLogin>
+          <NaverLogin onClick={naverHandler}>네이버로그인(임시)</NaverLogin>
           {type === "login" && <LoginForm />}
           {type === "register" && <RegisterForm />}
         </Form>
