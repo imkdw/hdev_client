@@ -81,7 +81,17 @@ const AuthPage = ({ type }: AuthPageProps) => {
     window.location.href = `${oAuthEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=${responseType}&scope=${scope}`;
   };
 
-  const naverHandler = () => {};
+  const naverHandler = () => {
+    const oAuthEndpoint = "https://nid.naver.com/oauth2.0/token";
+    const clientId = "w6DGCoVjEAuTQyLcCBQa";
+    const clientSecret = "temp";
+    const redirectUri = "http://localhost:3000/auth/naver";
+    const responseType = "token";
+    const state = "hdev";
+    const grantType = "authorization_code";
+
+    window.location.href = `${oAuthEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&reponse_type=${responseType}&state=${state}&grant_type=${grantType}&client_secret=${clientSecret}`;
+  };
 
   useEffect(() => {
     setEnableMenu(false);

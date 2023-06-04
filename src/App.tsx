@@ -16,6 +16,7 @@ import { useEffect } from "react";
 import SearchPage from "./pages/Search/SearchPage";
 import { checkLoggedIn } from "./services/AuthService";
 import GoogleAuth from "./pages/Auth/GoogleAuth";
+import NaverAuth from "./pages/Auth/NaverAuth";
 
 function App() {
   const isLoading = useRecoilValue(isLoadingState);
@@ -74,6 +75,7 @@ function App() {
         <Route path="/users/:userId" element={<ProfilePage />} />
         <Route path="/search" element={<SearchPage />} />
         <Route path="/auth/google" element={<GoogleAuth />} />
+        <Route path="/auth/naver" element={<NaverAuth />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>
