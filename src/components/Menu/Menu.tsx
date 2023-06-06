@@ -1,13 +1,14 @@
 import { useMediaQuery } from "react-responsive";
 import styled from "styled-components";
 
-import { useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { CloseIcon } from "../../assets/icon";
-import { enableMenuState } from "../../recoil";
+import { enableMenuState, loggedInUserState } from "../../recoil";
 import MenuLogo from "./MenuLogo";
 import MenuSearch from "./MenuSearch";
 import MenuLink from "./MenuLink";
 import MenuUtil from "./MenuUtil";
+import axios from "axios";
 
 const StyledMenu = styled.div`
   flex: 1.5;
@@ -61,13 +62,28 @@ const CloseButton = styled.button`
 
 const Menu = () => {
   const isMobile = useMediaQuery({ maxWidth: "767px" });
-
   const setEnableMenu = useSetRecoilState(enableMenuState);
+  const loggedInUser = useRecoilValue(loggedInUserState);
 
   /** 모바일환경 사이드메뉴 비활성화 */
   const closeMenuHandler = () => {
     setEnableMenu((prevState) => !prevState);
     document.body.style.overflow = "scroll";
+  };
+
+  // TODO: 테스트용 API 호출 핸들러
+  const testHandler = async (isToken: boolean) => {
+    const testUrl = "http://localhost:5000/test";
+    if (isToken) {
+      await axios.get(testUrl, {
+        headers: {
+          Authorization: `Bearer ${loggedInUser.accessToken}`,
+        },
+      });
+      return;
+    }
+
+    await axios.get(testUrl);
   };
 
   return (
@@ -81,6 +97,8 @@ const Menu = () => {
       <MenuSearch />
       <MenuLink />
       <MenuUtil />
+      <button onClick={() => testHandler(true)}>test(토큰O)</button>
+      <button onClick={() => testHandler(false)}>test(토큰X)</button>
     </StyledMenu>
   );
 };
