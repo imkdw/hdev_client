@@ -17,6 +17,7 @@ import SearchPage from "./pages/Search/SearchPage";
 import { checkLoggedIn } from "./services/AuthService";
 import GoogleAuth from "./pages/Auth/GoogleAuth";
 import NaverAuth from "./pages/Auth/NaverAuth";
+import ChatPage from "./pages/Chat/ChatPage";
 
 function App() {
   const isLoading = useRecoilValue(isLoadingState);
@@ -69,6 +70,7 @@ function App() {
         <Route path="/knowledge/*" element={<BoardListPage currentBoard="knowledge" />} />
         <Route path="/qna/*" element={<BoardListPage currentBoard="qna" />} />
         <Route path="/recruitment/*" element={<BoardListPage currentBoard="recruitment" />} />
+        <Route path="/chat" element={<ChatPage />} />
         <Route path="/boards/add" element={<CreateBoardPage />} />
         <Route path="/boards/:boardId/update" element={<UpdateBoardPage />} />
         <Route path="/boards/:boardId" element={<BoardDetailPage />} />

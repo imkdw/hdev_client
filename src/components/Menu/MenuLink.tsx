@@ -60,6 +60,12 @@ const MenuLink = () => {
       text: "인원모집",
       icon: PersonIcon,
     },
+    {
+      id: "chat",
+      to: "/chat",
+      text: "채팅(임시)",
+      icon: PersonIcon,
+    },
   ];
 
   return (
