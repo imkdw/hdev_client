@@ -9,7 +9,7 @@ if (process.env.NODE_ENV === "development") {
   });
 } else {
   api = axios.create({
-    baseURL: "https://api.hdev.site:5000",
+    baseURL: "https://api.hdev.site",
     withCredentials: true,
   });
 }
