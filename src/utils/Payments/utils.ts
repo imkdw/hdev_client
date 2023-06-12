@@ -3,7 +3,6 @@ import { IParam } from "../../types/payments";
 
 export function getTimestamp() {
   // Set the timezone
-  const timezone = "Asia/Seoul";
   const date = new Date();
   const currentTime = date.getTime();
   const currentTimeInSeconds = Math.floor(currentTime / 1000);
