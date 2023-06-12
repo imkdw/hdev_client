@@ -18,6 +18,7 @@ import { checkLoggedIn } from "./services/AuthService";
 import GoogleAuth from "./pages/Auth/GoogleAuth";
 import NaverAuth from "./pages/Auth/NaverAuth";
 import ChatPage from "./pages/Chat/ChatPage";
+import PaymentsPage from "./pages/Payments/PaymentsPage";
 
 function App() {
   const isLoading = useRecoilValue(isLoadingState);
@@ -78,6 +79,7 @@ function App() {
         <Route path="/search" element={<SearchPage />} />
         <Route path="/auth/google" element={<GoogleAuth />} />
         <Route path="/auth/naver" element={<NaverAuth />} />
+        <Route path="/payments" element={<PaymentsPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>
